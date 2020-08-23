@@ -8,6 +8,11 @@ public class BookStoreItem {
     public BookStoreItem() {
     }
 
+    public BookStoreItem(String name, int bookSum) {
+        this.name = name;
+        this.bookSum = bookSum;
+    }
+
     public String getName() {
         return name;
     }

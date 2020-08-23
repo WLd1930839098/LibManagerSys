@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BookServiceImpl implements BookService {
     @Autowired
@@ -54,6 +56,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Page<BookStoreItem> getStoreItems(Pageable pageable) {
-        return bookDao.getStoreItems(pageable);
+        Page<BookStoreItem> bookStoreItems =  (Page<BookStoreItem>)(BookStoreItem)bookDao.getStoreItems(pageable);
+        return bookStoreItems;
     }
 }
