@@ -2,38 +2,42 @@ package com.bins.bean;
 
 
 public class BookStoreItem {
+
     private String name;
-    private int bookSum;
+    private Long sum;
+
+
 
     public BookStoreItem() {
     }
 
-    public BookStoreItem(String name, int bookSum) {
+    public BookStoreItem(String name, Long sum) {
         this.name = name;
-        this.bookSum = bookSum;
+        this.sum = sum;
     }
+
 
     public String getName() {
         return name;
     }
 
-    public int getBookSum() {
-        return bookSum;
+    public Long getSum() {
+        return sum;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setBookSum(int bookSum) {
-        this.bookSum = bookSum;
+    public void setSum(Long sum) {
+        this.sum = sum;
     }
 
     @Override
     public String toString() {
         return "BookStoreItem{" +
                 "name='" + name + '\'' +
-                ", bookSum=" + bookSum +
+                ", sum=" + sum +
                 '}';
     }
 }

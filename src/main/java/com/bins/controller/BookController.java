@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 @Controller
 @RequestMapping("admin/book")
 public class BookController {
@@ -21,49 +22,53 @@ public class BookController {
     private BookService bookService;
 
     @RequestMapping
-    public String findAll(@PageableDefault(size = 5,sort = {"id"},
-    direction = Sort.Direction.ASC) Pageable pageable, Model model){
+    public String findAll(@PageableDefault(size = 5, sort = {"id"},
+            direction = Sort.Direction.ASC) Pageable pageable, Model model) {
         Page<Book> page = bookService.findAll(pageable);
-        model.addAttribute("page",page);
+        model.addAttribute("page", page);
         return "admin/books";
     }
 
     @RequestMapping("search")
-    public String search(@PageableDefault(size = 5,sort ={"id"},
-    direction = Sort.Direction.DESC)Pageable pageable, String name, Model model){
-        Page<Book> page = bookService.findAll(name,pageable);
-        model.addAttribute("page",page);
+    public String search(@PageableDefault(size = 5, sort = {"id"},
+            direction = Sort.Direction.DESC) Pageable pageable, String name, Model model) {
+        Page<Book> page = bookService.findAll(name, pageable);
+        model.addAttribute("page", page);
         return "admin/book::booksList";
     }
 
     @RequestMapping("toInput/{id}")
-    public String toInput(@PathVariable int id, Model model){
-        if(id==-1){//新增图书
-            model.addAttribute("book",new Book());
-        }else{
+    public String toInput(@PathVariable Long id, Model model) {
+        if (id == -1) {//新增图书
+            model.addAttribute("book", new Book());
+        } else {
             Book book = bookService.findById(id);
-            model.addAttribute("book",book);
+            model.addAttribute("book", book);
         }
         return "admin/books-input";
     }
 
     @RequestMapping("add")
-    public String add(Book book,int sum){
-        bookService.add(book,sum);
+    public String add(Book book, Integer bookNum) {
+        if(bookNum==null){
+            bookService.add(book);
+        }else{
+            bookService.add(book, bookNum);
+        }
         return "redirect:/admin/book";
     }
 
     @RequestMapping("delete/{id}")
-    public String toInput(@PathVariable int id){
+    public String toInput(@PathVariable Long id) {
         bookService.delete(id);
         return "redirect:/admin/book";
     }
 
     @RequestMapping("store")
-    public String getBookStoreItems(@PageableDefault(size = 5,sort = {"id"},
-            direction = Sort.Direction.ASC) Pageable pageable, Model model){
-        Page<BookStoreItem> page = bookService.getStoreItems(pageable);
-        model.addAttribute("page",page);
+    public String getBookStoreItems(@PageableDefault(size = 5, sort = {"id"},
+            direction = Sort.Direction.ASC) Pageable pageable, Model model) {
+        Page<BookStoreItem> page = bookService.getBookStoreItems(pageable);
+        model.addAttribute("page", page);
 
         return "admin/books-store";
     }

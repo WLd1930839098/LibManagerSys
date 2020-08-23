@@ -7,9 +7,12 @@ import com.bins.dao.BookDao;
 import com.bins.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,12 +26,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Page<Book> findAll(String query, Pageable pageable){
-        return bookDao.findByQuery("%"+query+"%",pageable);
+    public Page<Book> findAll(String query, Pageable pageable) {
+        return bookDao.findByQuery("%" + query + "%", pageable);
     }
 
     @Override
-    public Book findById(int id) {
+    public Book findById(Long id) {
         return bookDao.getOne(id);
     }
 
@@ -41,7 +44,7 @@ public class BookServiceImpl implements BookService {
     public void add(Book book, int sum) {
         String name = book.getName();
         boolean free = book.isFree();
-        for(int i=0;i<sum;i++){
+        for (int i = 0; i < sum; i++) {
             Book tmp = new Book();
             tmp.setName(name);
             tmp.setFree(free);
@@ -50,13 +53,24 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         bookDao.deleteById(id);
     }
 
     @Override
-    public Page<BookStoreItem> getStoreItems(Pageable pageable) {
-        Page<BookStoreItem> bookStoreItems =  (Page<BookStoreItem>)(BookStoreItem)bookDao.getStoreItems(pageable);
-        return bookStoreItems;
+    public Page<BookStoreItem> getBookStoreItems(Pageable pageable) {
+        List<BookStoreItem> items = bookDao.findBookStoreItem();
+        int size = pageable.getPageSize();
+        int total = items.size();
+        int fromIndex = size * pageable.getPageNumber();
+        int toIndex = fromIndex + size;
+        if (toIndex >= total) {
+            toIndex = total;
+        }
+        List<BookStoreItem> content = items.subList(fromIndex,toIndex);
+        Page<BookStoreItem> page = new PageImpl<BookStoreItem>(content, pageable, total);
+        return page;
     }
+
+
 }

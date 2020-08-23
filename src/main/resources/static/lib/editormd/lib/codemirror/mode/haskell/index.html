@@ -37,7 +37,7 @@ uniquePerms :: (Eq a) => [a] -> [[a]]
 uniquePerms = permBag . makeBag
 
 -- | An unordered collection where duplicate values are allowed,
--- but represented with a single value and a bookSum.
+-- but represented with a single value and a sum.
 type Bag a = [(a, Int)]
 
 makeBag :: (Eq a) => [a] -> Bag a

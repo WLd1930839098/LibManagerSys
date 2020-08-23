@@ -98,7 +98,7 @@
           </thead>
           <tbody>
           <tr th:each="newsList,iterStat : ${page.content}">
-            <td th:text="${iterStat.bookSum}">1</td>
+            <td th:text="${iterStat.sum}">1</td>
             <td th:text="${newsList.title}">刻意练习清单</td>
             <td th:text="${newsList.type.name}">认知升级</td>
             <td th:text="${newsList.recommend} ? '是':'否'">是</td>

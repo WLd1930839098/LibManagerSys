@@ -33,14 +33,14 @@ FUNCTION mean_and_stddev,array
   ;; average and standard deviation
 
   ave = 0.0
-  bookSum = 0.0
+  sum = 0.0
 
   for i=0,N_ELEMENTS(array)-1 do begin
       ave = ave + array[i]
-      bookSum = bookSum + 1
+      sum = sum + 1
   endfor
   
-  ave = ave/bookSum
+  ave = ave/sum
 
   std = stddev(array)  
 

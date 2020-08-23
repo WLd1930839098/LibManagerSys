@@ -41,9 +41,9 @@
 <div class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="#" class="item">书库</a>
+            <a href="#" th:href="@{/admin/book/store}" class="item">书库</a>
             <a href="#" th:href="@{/admin/book/toInput/{id}(id=-1)}" class="teal active item"
-               th:text="${book.id}==0?'新增图书':'修改图书'">新增图书</a>
+               th:text="${book.id}==null?'新增图书':'修改图书'">新增图书</a>
             <a href="#" th:href="@{/admin/book}" class="item">图书列表</a>
         </div>
     </div>
@@ -62,10 +62,10 @@
                 </div>
             </div>
 
-            <div class="field" th:if="${book.id}==0">
+            <div class="field" th:if="${book.id}==null">
                 <div class="ui left labeled input">
                     <label class="ui teal basic label">数量</label>
-                    <input type="text" name="sum" placeholder="请输入数量">
+                    <input type="text" name="bookNum" placeholder="请输入数量" th:if="${book.id}==null">
                 </div>
             </div>
 

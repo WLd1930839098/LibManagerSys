@@ -52,12 +52,12 @@
   if (number_of_points > 0) average_points = sum(points) / number_of_points
 
   ! Now form average over positive and negative points only
-  if (bookSum(points > 0.) > 0) then
-     positive_average = sum(points, points > 0.) / bookSum(points > 0.)
+  if (sum(points > 0.) > 0) then
+     positive_average = sum(points, points > 0.) / sum(points > 0.)
   end if
 
-  if (bookSum(points < 0.) > 0) then
-     negative_average = sum(points, points < 0.) / bookSum(points < 0.)
+  if (sum(points < 0.) > 0) then
+     negative_average = sum(points, points < 0.) / sum(points < 0.)
   end if
 
   deallocate (points)

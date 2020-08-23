@@ -58,16 +58,16 @@ enum OzzieCoin {
   final value
 }
 
-def plural(word, bookSum) {
-  if (bookSum == 1) return word
+def plural(word, sum) {
+  if (sum == 1) return word
   word[-1] == 'y' ? word[0..-2] + "ies" : word + "s"
 }
 
 def change(currency, amount) {
   currency.values().inject([]){ list, coin ->
-     int bookSum = amount / coin.value
+     int sum = amount / coin.value
      amount = amount % coin.value
-     list += "$bookSum ${plural(coin.toString(), bookSum)}"
+     list += "$sum ${plural(coin.toString(), sum)}"
   }
 }
 </textarea></form>

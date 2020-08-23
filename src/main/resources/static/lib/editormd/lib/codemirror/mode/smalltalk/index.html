@@ -34,19 +34,19 @@
     This is a test of the Smalltalk code
 "
 Seaside.WAComponent subclass: #MyCounter [
-    | bookSum |
+    | sum |
     MyCounter class &gt;&gt; canBeRoot [ ^true ]
 
     initialize [
         super initialize.
-        bookSum := 0.
+        sum := 0.
     ]
     states [ ^{ self } ]
     renderContentOn: html [
-        html heading: bookSum.
-        html anchor callback: [ bookSum := bookSum + 1 ]; with: '++'.
+        html heading: sum.
+        html anchor callback: [ sum := sum + 1 ]; with: '++'.
         html space.
-        html anchor callback: [ bookSum := bookSum - 1 ]; with: '--'.
+        html anchor callback: [ sum := sum - 1 ]; with: '--'.
     ]
 ]
 

@@ -8,13 +8,13 @@ public class User {
 
     @Id     //设置主键
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @Column(unique = true)
     private String name;
     @Column
     private String password;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -26,7 +26,7 @@ public class User {
         return password;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

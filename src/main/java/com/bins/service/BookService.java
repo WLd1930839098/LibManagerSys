@@ -9,13 +9,14 @@ public interface BookService {
     Page<Book> findAll(Pageable pageable);
     Page<Book> findAll(String query, Pageable pageable);
 
-    Book findById(int id);
+    Book findById(Long id);
 
     void add(Book book);
 
     void add(Book book,int sum);
 
-    void delete(int id);
+    void delete(Long id);
 
-    Page<BookStoreItem> getStoreItems(Pageable pageable);
+    Page<BookStoreItem> getBookStoreItems(Pageable pageable);
+
 }
