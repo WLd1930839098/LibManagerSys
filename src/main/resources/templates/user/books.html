@@ -32,7 +32,7 @@
                 <td th:text="${bookStoreItem.name}">红楼梦</td>
                 <td th:text="${bookStoreItem.sum}">10</td>
                 <td>
-                    <a th:href="@{/admin/book/borrow/{name}(name=${bookStoreItem.name})}"
+                    <a th:href="@{/borrow/{name}(name=${bookStoreItem.name})}"
                        class="ui mini teal basic button">
                         借阅
                     </a>

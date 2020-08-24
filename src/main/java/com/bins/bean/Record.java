@@ -20,11 +20,19 @@ public class Record {
     @Temporal(TemporalType.TIMESTAMP)
     private Date time;
     @Column
-    private boolean isBorrow;
+    private boolean borrowFlag;
 
 
     public Long getId() {
         return id;
+    }
+
+    public void setBorrowFlag(boolean borrowFlag) {
+        this.borrowFlag = borrowFlag;
+    }
+
+    public boolean isBorrowFlag() {
+        return borrowFlag;
     }
 
     public User getUser() {
@@ -39,9 +47,6 @@ public class Record {
         return time;
     }
 
-    public boolean isBorrow() {
-        return isBorrow;
-    }
 
     public void setId(Long id) {
         this.id = id;
@@ -59,7 +64,4 @@ public class Record {
         this.time = time;
     }
 
-    public void setBorrow(boolean borrow) {
-        isBorrow = borrow;
-    }
 }

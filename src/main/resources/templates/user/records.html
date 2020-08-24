@@ -3,18 +3,20 @@
 <head th:replace="_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>借阅管理</title>
+    <title>我的借阅</title>
 </head>
 <body>
 
 <!--导航-->
-<nav th:replace="_fragments :: menu(3)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small"></nav>
+<nav th:replace="_fragments :: userMenu(2)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small"></nav>
 
 <!--表单上部菜单-->
 <div class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a th:href="@{/admin/record}" class="teal active item">全部记录</a>
+            <a th:href="@{/records}" class="teal active item">全部记录</a>
+            <a th:href="@{/records-borrow}" class="item">借阅记录</a>
+            <a th:href="@{/records-return}" class="item">归还记录</a>
         </div>
     </div>
 </div>
@@ -22,27 +24,8 @@
 <!--中间内容-->
 <div class="m-container-small m-padded-tb-big">
     <div class="ui container">
-        <div class="ui secondary segment form">
-            <input type="hidden" name="page">
-            <div class="inline fields">
-                <div class="field">
-                    <label class="ui basic label">用户名：</label>
-                    <input type="text" name="userName" placeholder="请输入用户名">
-                </div>
-                <div class="field">
-                    <label class="ui basic label">图书名：</label>
-                    <input type="text" name="bookName" placeholder="请输入图书名">
-                </div>
-                <div class="field">
-                    <button type="button" id="search-btn" class="ui mini teal basic button">
-                        <i class="search icon"></i>
-                        搜索
-                    </button>
-                </div>
-            </div>
-        </div>
         <div id="table-container">
-            <table th:fragment="recordList" class="ui compact teal table">
+            <table class="ui compact teal table">
                 <!--<table th:fragment="newsList" class="ui celled table">-->
                 <thead>
                 <tr>
@@ -66,6 +49,7 @@
                     <th th:text="${record.book.name}">红楼梦</th>
                     <td th:text="${record.borrowFlag} ? '借阅':'归还'">借阅</td>
                     <td th:text="${record.time}">2017-10-02 08:45</td>
+
                 </tr>
                 </tbody>
                 <tfoot>
@@ -75,16 +59,16 @@
                         <a class="m-text"><b th:text="${page.number+1}+'/'+ ${page.totalPages}+ '页'"
                                              th:unless="${page.number >= page.totalPages}"></b></a>
                         <div class="ui mini pagination menu">
-                            <a class="item" th:href="@{/admin/record(page=0)}" th:if="${page.totalPages}>0">首页</a>
-                            <a class="item" th:href="@{/admin/record(page=${page.number}-1)}" th:unless="${page.first}"
+                            <a class="item" th:href="@{/books(page=0)}" th:if="${page.totalPages}>0">首页</a>
+                            <a class="item" th:href="@{/books(page=${page.number}-1)}" th:unless="${page.first}"
                                th:if="${page.totalPages}>0">上一页</a>
-                            <a class="item" th:href="@{/admin/record(page=${i}-1)}"
+                            <a class="item" th:href="@{/books(page=${i}-1)}"
                                th:each="i :${#numbers.sequence(1, page.totalPages)}" th:text="${i}"
                                th:if="${page.totalPages>0}">
                             </a>
-                            <a class=" item" th:href="@{/admin/record(page=${page.number}+1)}" th:unless="${page.last}"
+                            <a class=" item" th:href="@{/books(page=${page.number}+1)}" th:unless="${page.last}"
                                th:if="${page.totalPages}>0">下一页</a>
-                            <a class="  item" th:href="@{/admin/record(page=${page.totalPages-1})}"
+                            <a class="  item" th:href="@{/books(page=${page.totalPages-1})}"
                                th:if="${page.totalPages}>0">尾页</a>
                         </div>
                         <a class="m-text">
@@ -131,6 +115,13 @@
                 .transition('fade');
         });
 
+    $('#clear-btn')
+        .on('click', function () {
+            $('.ui.type.dropdown')
+                .dropdown('clear')
+            ;
+        })
+    ;
 
     function page(obj) {
         $("[name='page']").val($(obj).data("page"));
@@ -144,8 +135,10 @@
 
     function load() {
         $("#table-container").load(/*[[@{/admin/newsList/search}]]*/"/admin/record/search", {
-                userName: $("[name='userName']").val(),
-                bookName: $("[name='bookName']").val()
+                title: $("[name='title']").val(),
+                typeId: $("[name='typeId']").val(),
+                recommend: $("[name='recommend']").prop('checked'),
+                page: $("[name='page']").val()
             }
         )
     }

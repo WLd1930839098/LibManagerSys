@@ -45,7 +45,7 @@
                 <td th:text="${iterStat.count}">1</td>
                 <td th:text="${book.id}">1</td>
                 <td th:text="${book.name}">红楼梦</td>
-                <td th:text="${book.free} ? '是':'否'">否</td>
+                <td th:text="${book.free} ? '否':'是'">否</td>
                 <td>
                     <a href="#" th:href="@{/admin/book/toInput/{id}(id=${book.id})}"
                        class="ui mini teal basic button">编辑</a>

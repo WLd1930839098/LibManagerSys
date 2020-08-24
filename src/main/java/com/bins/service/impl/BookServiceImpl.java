@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -111,8 +112,27 @@ public class BookServiceImpl implements BookService {
         Record record = new Record();
         record.setBook(book);
         record.setUser(user);
-        record.setBorrow(true);
+        record.setTime(new Date());
+        record.setBorrowFlag(true);
         recordDao.save(record);
+    }
+
+    @Override
+    public Book getOneById(Long id) {
+        return bookDao.getOne(id);
+    }
+
+    @Override
+    @Transactional
+    public void returnBook(Book book, User user) {
+        Record record = new Record();
+        record.setBook(book);
+        record.setUser(user);
+        record.setBorrowFlag(false);
+        record.setTime(new Date());
+        recordDao.save(record);
+        book.setFree(true);
+        bookDao.save(book);
     }
 
 

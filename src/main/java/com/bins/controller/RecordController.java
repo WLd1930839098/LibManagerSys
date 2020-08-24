@@ -43,4 +43,25 @@ public class RecordController {
         return "admin/records-return";
     }
 
+    @RequestMapping("search")
+    public String search(@PageableDefault(size = 5, sort = {"time"},
+            direction = Sort.Direction.ASC) Pageable pageable, Model model,
+                         String userName, String bookName) {
+        Page<Record> page=null;
+        if(!userName.equals("")&&!bookName.equals("")){
+            page = recordService.findAllByUserByBook(userName, bookName, pageable);
+        }
+        if(userName.equals("")||bookName.equals("")){
+            page = recordService.findAll(pageable);
+        }
+        if(!userName.equals("")){
+            page = recordService.searchByUserName(userName, pageable);
+        }
+        if(!bookName.equals("")){
+            page = recordService.searchByBookName(bookName, pageable);
+        }
+        model.addAttribute("page", page);
+        return "admin/records::recordList";
+    }
+
 }

@@ -67,18 +67,7 @@ public class BookController {
     }
 
 
-    @RequestMapping("borrow/{name}")
-    public String borrow(@PathVariable String name, HttpServletRequest request, HttpServletResponse response){
-        Book book = bookService.getOneBookByName(name);
-        HttpSession session = request.getSession();
-        User user = (User)session.getAttribute("user");
-        if(user==null){
-            return "redirect:/toLogin";
-        }else{
-            bookService.borrow(book,user);
-            return "redirect:/books";
-        }
-    }
+
 
 
 }

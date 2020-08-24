@@ -28,4 +28,8 @@ public interface BookService {
     Book getOneBookByName(String name);
 
     void borrow(Book book, User user);
+
+    Book getOneById(Long id);
+
+    void returnBook(Book book, User user);
 }
