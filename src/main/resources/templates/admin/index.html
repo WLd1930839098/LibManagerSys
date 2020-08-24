@@ -16,10 +16,10 @@
     <div class="ui container">
         <div class="ui success large  message">
             <h3>Welcome,</h3>
-            <p th:text="${session.user.name}+'欢迎使用该系统!'">欢迎登录！</p>
+            <p th:text="${session.user.name}"></p>
+            <p>欢迎使用 √4图书管理系统!</p>
         </div>
 
-        <img th:src="@{/images/wechat.jpg}" alt="" class="ui rounded bordered fluid image">
     </div>
 </div>
 

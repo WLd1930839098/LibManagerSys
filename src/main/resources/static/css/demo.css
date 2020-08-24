@@ -213,7 +213,5 @@
     right: 15px;
     bottom: 20px;
     display: none;
-    background: url(../images/totop.png) no-repeat;
     _position: absolute;
-    _top: expression(documentElement.scrollTop+documentElement.clientHeight-this.offsetHeight-20);
 }
