@@ -22,4 +22,14 @@ public class UserServiceImpl implements UserService {
     public Page<User> findAll(Pageable pageable){
         return userDao.findAll(pageable);
     }
+
+    @Override
+    public User findById(Long id) {
+        return userDao.getOne(id);
+    }
+
+    @Override
+    public void add(User user) {
+        userDao.save(user);
+    }
 }

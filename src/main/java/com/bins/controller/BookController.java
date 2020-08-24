@@ -1,7 +1,6 @@
 package com.bins.controller;
 
 import com.bins.bean.Book;
-import com.bins.bean.BookStoreItem;
 import com.bins.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -49,12 +48,9 @@ public class BookController {
     }
 
     @RequestMapping("add")
-    public String add(Book book, Integer bookNum) {
-        if(bookNum==null){
-            bookService.add(book);
-        }else{
-            bookService.add(book, bookNum);
-        }
+    public String add(Book book) {
+
+        bookService.add(book);
         return "redirect:/admin/book";
     }
 
@@ -64,13 +60,5 @@ public class BookController {
         return "redirect:/admin/book";
     }
 
-    @RequestMapping("store")
-    public String getBookStoreItems(@PageableDefault(size = 5, sort = {"id"},
-            direction = Sort.Direction.ASC) Pageable pageable, Model model) {
-        Page<BookStoreItem> page = bookService.getBookStoreItems(pageable);
-        model.addAttribute("page", page);
-
-        return "admin/books-store";
-    }
 
 }

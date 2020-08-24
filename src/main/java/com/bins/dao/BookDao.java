@@ -11,11 +11,22 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BookDao extends JpaRepository<Book,Long> {
+public interface BookDao extends JpaRepository<Book, Long> {
     @Query("select b from Book b where b.name like ?1")
     Page<Book> findByQuery(String s, Pageable pageable);
 
     @Query("select  new com.bins.bean.BookStoreItem(b.name,count(b.id)) from Book b group by b.name")
     List<BookStoreItem> findBookStoreItem();
 
+    @Query("select new com.bins.bean.BookStoreItem(b.name,count(b.id)) from Book b where b.name=?1 group by b.name")
+    BookStoreItem findStoreItemByName(String name);
+
+
+    @Query("select b.id from Book b where b.name=?1")
+    List<Long> getIdsByName(String name);
+
+//    @Query("delete from Book b where b.id in (?1)")
+//    void deleteByIds(List<Long> ids);
+
+    void deleteBookByIdIn(List<Long> ids);
 }

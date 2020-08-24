@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="_fragments :: head(~{::title})">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>图书管理</title>
+    <title>书库管理</title>
 </head>
 <body>
 
@@ -16,9 +14,9 @@
         <div class="right menu">
             <a th:href="@{/admin/bookStore}" class="item">书库</a>
             <a th:href="@{/admin/book}" class="item">图书列表</a>
-            <a th:href="@{/admin/book/toInput/{id}(id=-1)}" class="teal active item"
-               th:text="${book.id}==null?'新增图书':'修改图书'">新增图书</a>
-            <a th:href="@{/admin/bookStore/toInput/{name}(name='null')}" class="item">新增书库</a>
+            <a th:href="@{/admin/book/toInput/{id}(id=-1)}" class="item">新增图书</a>
+            <a th:href="@{/admin/bookStore/toInput/{name}(name='null')}" class="teal active item"
+               th:text="${bookStoreItem.name}==null?'新增书库':'修改书库'">新增书库</a>
         </div>
     </div>
 </div>
@@ -27,12 +25,20 @@
 <!--中间内容-->
 <div class="m-container-small m-padded-tb-big">
     <div class="ui container">
-        <form action="#" method="post" th:object="${book}" th:action="@{/admin/book/add}" class="ui form">
-            <input type="hidden" name="id" th:value="*{id}">
+        <form action="#" method="post" th:object="${bookStoreItem}"
+              th:action="@{/admin/bookStore/add/}" class="ui form">
+            <input type="hidden" name="lastName" value="${bookStoreItem}">
             <div class=" field">
                 <div class="ui left labeled input">
                     <label class="ui teal basic label">名称</label>
                     <input type="text" name="name" placeholder="输入书籍名称" th:value="*{name}">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="ui left labeled input">
+                    <label class="ui teal basic label">数量</label>
+                    <input type="text" name="bookNum" placeholder="请输入添加数量" th:value="*{sum}">
                 </div>
             </div>
 

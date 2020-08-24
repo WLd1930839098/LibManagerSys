@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +71,18 @@ public class BookServiceImpl implements BookService {
         List<BookStoreItem> content = items.subList(fromIndex,toIndex);
         Page<BookStoreItem> page = new PageImpl<BookStoreItem>(content, pageable, total);
         return page;
+    }
+
+    @Override
+    public BookStoreItem findStoreItemByName(String name) {
+        return bookDao.findStoreItemByName(name);
+    }
+
+    @Override
+    @Transactional
+    public void deleteByName(String name) {
+        List<Long> ids = bookDao.getIdsByName(name);
+        bookDao.deleteBookByIdIn(ids);
     }
 
 
