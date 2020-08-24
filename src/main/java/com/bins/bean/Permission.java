@@ -3,19 +3,15 @@ package com.bins.bean;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "t_user")
-public class User {
-
-    @Id     //设置主键
+@Table(name = "t_permission")
+public class Permission {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
+    @Column
     private String name;
     @Column
-    private String password;
-
-    @ManyToOne
-    private Role role;
+    private String code;
 
     public Long getId() {
         return id;
@@ -25,8 +21,8 @@ public class User {
         return name;
     }
 
-    public String getPassword() {
-        return password;
+    public String getCode() {
+        return code;
     }
 
     public void setId(Long id) {
@@ -37,27 +33,16 @@ public class User {
         this.name = name;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setCode(String code) {
+        this.code = code;
     }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Permission{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", role=" + role +
+                ", code='" + code + '\'' +
                 '}';
     }
-
 }

@@ -12,8 +12,8 @@
 <div class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a th:href="@{/admin/user}" class="teal active item">全部用户</a>
-            <a th:href="@{/admin/user/admins}" class="item">管理员</a>
+            <a th:href="@{/admin/user}" class="item">全部用户</a>
+            <a th:href="@{/admin/user/admins}" class="teal active item">管理员</a>
             <a th:href="@{/admin/user/users}" class="item">普通用户</a>
         </div>
     </div>
@@ -86,8 +86,7 @@
                             尾页
                         </a>
                     </div>
-                    <a th:href="@{/admin/user/toInput/{id}(id=-1)}"
-                       class="ui mini right floated teal basic button">
+                    <a th:href="@{/admin/user/toInput/{id}(id=-1)}" class="ui mini right floated teal basic button">
                         添加用户
                     </a>
                 </th>

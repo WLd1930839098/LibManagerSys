@@ -2,6 +2,7 @@ package com.bins.service;
 
 import com.bins.bean.Book;
 import com.bins.bean.BookStoreItem;
+import com.bins.bean.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -23,4 +24,8 @@ public interface BookService {
     BookStoreItem findStoreItemByName(String name);
 
     void deleteByName(String name);
+
+    Book getOneBookByName(String name);
+
+    void borrow(Book book, User user);
 }

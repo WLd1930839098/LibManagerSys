@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<!--导航-->
+<!--管理员导航-->
 <nav th:fragment="menu(n)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted secondary stackable menu">
@@ -21,8 +21,42 @@
                th:classappend="${n==1} ? 'active'">用户管理</a>
             <a href="#" th:href="@{/admin/book}" class=" m-item item m-mobile-hide"
                th:classappend="${n==2} ? 'active'">书籍管理</a>
-            <a href="#" th:href="@{/admin/borrow}" class="m-item item m-mobile-hide"
+            <a href="#" th:href="@{/admin/record}" class="m-item item m-mobile-hide"
                th:classappend="${n==3} ? 'active'">借阅管理</a>
+            <div class="right m-item m-mobile-hide menu">
+                <div class="ui dropdown  item">
+                    <div class="text">
+                        <img class="ui avatar image" th:src="@{/images/wechat.jpg}">
+                        <!--th:src="@{${session.user.avatar}}">-->
+                        <!--<span th:text="${session.user.nickname}">bins</span>-->
+                        <span>bins</span>
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" th:href="@{/logout}" class="item">注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+<!--管理员导航-->
+
+
+<!--用户导航-->
+<nav th:fragment="userMenu(n)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">图书管理系统</h2>
+            <a href="#" th:href="@{/admin/user}" class=" m-item item m-mobile-hide"
+               th:classappend="${n==1} ? 'active'">书库</a>
+            <a href="#" th:href="@{/admin/book}" class=" m-item item m-mobile-hide"
+               th:classappend="${n==2} ? 'active'">借阅记录</a>
+            <a href="#" th:href="@{/admin/record}" class="m-item item m-mobile-hide"
+               th:classappend="${n==3} ? 'active'">我的</a>
             <div class="right m-item m-mobile-hide menu">
                 <div class="ui dropdown  item">
                     <div class="text">
@@ -43,7 +77,7 @@
         <i class="sidebar icon"></i>
     </a>
 </nav>
-<!--导航-->
+<!--用户导航-->
 
 
 <!--底部footer-->

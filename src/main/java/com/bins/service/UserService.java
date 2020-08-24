@@ -13,4 +13,8 @@ public interface UserService {
     User findById(Long id);
 
     void add(User user);
+
+    void deleteById(Long id);
+
+    Page<User> findAllByRole(Long roleId,Pageable pageable);
 }

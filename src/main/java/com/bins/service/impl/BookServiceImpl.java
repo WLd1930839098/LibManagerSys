@@ -3,7 +3,10 @@ package com.bins.service.impl;
 import com.bins.bean.Book;
 //import com.bins.bean.BookStoreItem;
 import com.bins.bean.BookStoreItem;
+import com.bins.bean.Record;
+import com.bins.bean.User;
 import com.bins.dao.BookDao;
+import com.bins.dao.RecordDao;
 import com.bins.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +23,8 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
     @Autowired
     private BookDao bookDao;
+    @Autowired
+    private RecordDao recordDao;
 
     @Override
     public Page<Book> findAll(Pageable pageable) {
@@ -38,10 +43,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void add(Book book) {
+        book.setFree(true);
         bookDao.save(book);
     }
 
     @Override
+    @Transactional
     public void add(Book book, int sum) {
         String name = book.getName();
         boolean free = book.isFree();
@@ -49,6 +56,7 @@ public class BookServiceImpl implements BookService {
             Book tmp = new Book();
             tmp.setName(name);
             tmp.setFree(free);
+            tmp.setFree(true);
             bookDao.save(tmp);
         }
     }
@@ -83,6 +91,28 @@ public class BookServiceImpl implements BookService {
     public void deleteByName(String name) {
         List<Long> ids = bookDao.getIdsByName(name);
         bookDao.deleteBookByIdIn(ids);
+    }
+
+    @Override
+    public Book getOneBookByName(String name) {
+        List<Book> books = bookDao.findOneByName(name);
+        if(books.isEmpty()){
+            return null;
+        }else{
+            return books.get(0);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void borrow(Book book, User user) {
+        book.setFree(false);
+        bookDao.save(book);
+        Record record = new Record();
+        record.setBook(book);
+        record.setUser(user);
+        record.setBorrow(true);
+        recordDao.save(record);
     }
 
 

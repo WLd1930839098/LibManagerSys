@@ -1,8 +1,9 @@
 package com.bins.controller;
 
+import com.bins.bean.Role;
 import com.bins.bean.User;
+import com.bins.service.RoleService;
 import com.bins.service.UserService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,10 +23,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("toLogin")
-    public String toLogin(){
-        return "redirect:/user/login";
-    }
+    @Autowired
+    private RoleService roleService;
+
 
     @RequestMapping
     public String allUsers(@PageableDefault(size = 5, sort = {"id"},
@@ -38,17 +38,17 @@ public class UserController {
     @RequestMapping("admins")
     public String admins(@PageableDefault(size = 5, sort = {"id"},
             direction = Sort.Direction.ASC) Pageable pageable, Model model) {
-        Page<User> page = userService.findAll(pageable);
+        Page<User> page = userService.findAllByRole(1l,pageable);
         model.addAttribute("page", page);
-        return "admin/users::userList";
+        return "admin/users-admin";
     }
 
     @RequestMapping("users")
     public String users(@PageableDefault(size = 5, sort = {"id"},
             direction = Sort.Direction.ASC) Pageable pageable, Model model) {
-        Page<User> page = userService.findAll(pageable);
+        Page<User> page = userService.findAllByRole(2l,pageable);
         model.addAttribute("page", page);
-        return "admin/users::userList";
+        return "admin/users-user";
     }
 
     @RequestMapping("toInput/{id}")
@@ -60,12 +60,20 @@ public class UserController {
             User user = userService.findById(id);
             model.addAttribute("user",user);
         }
+        List<Role> roles = roleService.findAll();
+        model.addAttribute("roles",roles);
         return "admin/users-input";
     }
 
     @RequestMapping("add")
     public String add(User user){
         userService.add(user);
+        return "redirect:/admin/user";
+    }
+
+    @RequestMapping("delete/{id}")
+    public String delete(@PathVariable Long id){
+        userService.deleteById(id);
         return "redirect:/admin/user";
     }
 

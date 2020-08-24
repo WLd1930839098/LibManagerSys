@@ -1,6 +1,7 @@
 package com.bins.controller;
 
 import com.bins.bean.Book;
+import com.bins.bean.User;
 import com.bins.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 
 @Controller
@@ -58,6 +64,20 @@ public class BookController {
     public String toInput(@PathVariable Long id) {
         bookService.delete(id);
         return "redirect:/admin/book";
+    }
+
+
+    @RequestMapping("borrow/{name}")
+    public String borrow(@PathVariable String name, HttpServletRequest request, HttpServletResponse response){
+        Book book = bookService.getOneBookByName(name);
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("user");
+        if(user==null){
+            return "redirect:/toLogin";
+        }else{
+            bookService.borrow(book,user);
+            return "redirect:/books";
+        }
     }
 
 

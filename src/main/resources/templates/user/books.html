@@ -1,23 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="_fragments :: head(~{::title})">
-    <title>用户管理</title>
+    <title>书库管理</title>
 </head>
 <body>
 
 <!--导航-->
-<nav th:replace="_fragments :: menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small"></nav>
+<nav th:replace="_fragments :: userMenu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small"></nav>
 
-<!--表单上部菜单-->
-<div class="ui attached pointing menu">
-    <div class="ui container">
-        <div class="right menu">
-            <a th:href="@{/admin/user}" class="teal active item">全部用户</a>
-            <a th:href="@{/admin/user/admins}" class="item">管理员</a>
-            <a th:href="@{/admin/user/users}" class="item">普通用户</a>
-        </div>
-    </div>
-</div>
 
 <!--中间内容-->
 <div class="m-container-small m-padded-tb-big">
@@ -27,32 +17,24 @@
             <div class="header">提示：</div>
             <p th:text="${message}">恭喜，操作成功！</p>
         </div>
-        <table th:fragment="userList" class="ui compact cell table">
+        <table class="ui compact teal table">
             <thead>
             <tr>
                 <th>序号</th>
-                <th>Id</th>
-                <th>用户名</th>
-                <th>密码</th>
-                <th>角色</th>
+                <th>书籍名称</th>
+                <th>数量</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="user,iterStat:${page.content}">
+            <tr th:each="bookStoreItem,iterStat:${page.content}">
                 <td th:text="${iterStat.count}">1</td>
-                <td th:text="${user.Id}">1</td>
-                <td th:text="${user.name}">bins</td>
-                <td th:text="${user.password}">123</td>
-                <td th:text="${user.role.id}==1?'管理员':'普通用户'">管理员</td>
+                <td th:text="${bookStoreItem.name}">红楼梦</td>
+                <td th:text="${bookStoreItem.sum}">10</td>
                 <td>
-                    <a th:href="@{/admin/user/delete/{id}(id=${user.id})}"
-                       class="ui mini red basic button">
-                        删除用户
-                    </a>
-                    <a th:href="@{/admin/user/toInput/{id}(id=${user.id})}"
+                    <a th:href="@{/admin/book/borrow/{name}(name=${bookStoreItem.name})}"
                        class="ui mini teal basic button">
-                        修改用户
+                        借阅
                     </a>
                 </td>
             </tr>
@@ -66,30 +48,26 @@
                         </b>
                     </a>
                     <div class="ui mini pagination menu">
-                        <a class="item" th:href="@{/admin/user(page=0)}" th:if="${page.totalPages}>0">
+                        <a class="item" th:href="@{/admin/bookStore(page=0)}" th:if="${page.totalPages}>0">
                             首页
                         </a>
-                        <a class="item" th:href="@{/admin/user(page=${page.number}-1)}" th:unless="${page.first}"
+                        <a class="item" th:href="@{/admin/bookStore(page=${page.number}-1)}" th:unless="${page.first}"
                            th:if="${page.totalPages}>0">
                             上一页
                         </a>
-                        <a class="item" th:href="@{/admin/user(page=${i}-1)}"
+                        <a class="item" th:href="@{/admin/bookStore(page=${i}-1)}"
                            th:each="i :${#numbers.sequence(1, page.totalPages)}" th:text="${i}"
                            th:if="${page.totalPages>0}">
                         </a>
-                        <a class=" item" th:href="@{/admin/user(page=${page.number}+1)}" th:unless="${page.last}"
+                        <a class=" item" th:href="@{/admin/bookStore(page=${page.number}+1)}" th:unless="${page.last}"
                            th:if="${page.totalPages}>0">
                             下一页
                         </a>
-                        <a class="  item" th:href="@{/admin/user(page=${page.totalPages-1})}"
+                        <a class="  item" th:href="@{/admin/bookStore(page=${page.totalPages-1})}"
                            th:if="${page.totalPages}>0">
                             尾页
                         </a>
                     </div>
-                    <a th:href="@{/admin/user/toInput/{id}(id=-1)}"
-                       class="ui mini right floated teal basic button">
-                        添加用户
-                    </a>
                 </th>
             </tr>
             </tfoot>
@@ -100,8 +78,8 @@
 <br>
 <br>
 <!--底部footer-->
-<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive">
-</footer>
+<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-massive"></footer>
+
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
 <script src="../../static/lib/editormd/editormd.min.js" th:src="@{/lib/editormd/editormd.min.js}"></script>

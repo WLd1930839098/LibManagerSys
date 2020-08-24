@@ -15,7 +15,7 @@ public interface BookDao extends JpaRepository<Book, Long> {
     @Query("select b from Book b where b.name like ?1")
     Page<Book> findByQuery(String s, Pageable pageable);
 
-    @Query("select  new com.bins.bean.BookStoreItem(b.name,count(b.id)) from Book b group by b.name")
+    @Query("select  new com.bins.bean.BookStoreItem(b.name,count(b.id)) from Book b where b.free=true group by b.name")
     List<BookStoreItem> findBookStoreItem();
 
     @Query("select new com.bins.bean.BookStoreItem(b.name,count(b.id)) from Book b where b.name=?1 group by b.name")
@@ -29,4 +29,7 @@ public interface BookDao extends JpaRepository<Book, Long> {
 //    void deleteByIds(List<Long> ids);
 
     void deleteBookByIdIn(List<Long> ids);
+
+    @Query("select b from Book b where b.name=?1 and b.free=true")
+    List<Book> findOneByName(String name);
 }
