@@ -21,7 +21,7 @@ public class LoginController {
 
     @GetMapping("toLogin")
     public String toLogin() {
-        return "login";//默认后缀为".html"
+        return "my-login";//默认后缀为".html"
     }
 
     @RequestMapping("login")
@@ -30,14 +30,14 @@ public class LoginController {
         User user = userService.login(username, password);
         if (user != null) {
             session.setAttribute("user", user);
-            if(user.getRole().getId()==1) {
+            if (user.getRole().getId() == 1) {
                 return "admin/index";
-            }else{
+            } else {
                 return "user/index";
             }
         } else {
             redirectAttributes.addFlashAttribute("msg", "用户名或密码错误");
-            return "redirect:/admin/toLogin";
+            return "redirect:/toLogin";
         }
 //        try {
 //            UsernamePasswordToken token = new UsernamePasswordToken(username, MD5Util.code(password));
@@ -53,7 +53,7 @@ public class LoginController {
     }
 
     @RequestMapping("logout")
-    public String logout(){
+    public String logout() {
         return "redirect:toLogin";
     }
 }
